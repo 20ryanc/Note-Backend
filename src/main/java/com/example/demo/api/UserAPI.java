@@ -5,8 +5,7 @@ import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -19,7 +18,7 @@ public class UserAPI {
     }
 
     @GetMapping
-    public ArrayList<User> getAllUser(){
+    public List<User> getAllUser(){
         return userService.getAllUser();
     }
 
@@ -30,6 +29,7 @@ public class UserAPI {
 
     @PostMapping
     public void addUser(@RequestBody User user){
+        System.out.println(user);
         userService.addUser(user);
     }
 
@@ -38,8 +38,9 @@ public class UserAPI {
         userService.updateUser(user);
     }
 
-    @DeleteMapping("{Email}")
+    @DeleteMapping("/{Email}")
     public void deleteUser(@PathVariable("Email") String email){
+        System.out.println(email);
         userService.removeUser(email);
     }
 

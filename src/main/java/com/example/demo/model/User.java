@@ -11,13 +11,16 @@ import java.util.UUID;
 import java.lang.ClassCastException;
 
 @Entity
-@Table
+@Table(name = "users")
 public class User {
     @Id
     private String email;
     @NotBlank
     private String name;
 
+    public User(){
+
+    }
     public User(@JsonProperty("email") String email,
                 @JsonProperty("name") String name) {
         this.email = email;
