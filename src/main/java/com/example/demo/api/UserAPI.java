@@ -23,9 +23,9 @@ public class UserAPI {
         return userService.getAllUser();
     }
 
-    @GetMapping("{userID}")
-    public User getUser(@PathVariable("userID") UUID id){
-        return userService.getUser(id);
+    @GetMapping("{Email}")
+    public User getUser(@PathVariable("Email") String email){
+        return userService.getUser(email);
     }
 
     @PostMapping
@@ -38,9 +38,9 @@ public class UserAPI {
         userService.updateUser(user);
     }
 
-    @DeleteMapping("{userID}")
-    public void deleteUser(@PathVariable("userID") UUID id){
-        userService.removeUser(id);
+    @DeleteMapping("{Email}")
+    public void deleteUser(@PathVariable("Email") String email){
+        userService.removeUser(email);
     }
 
 }

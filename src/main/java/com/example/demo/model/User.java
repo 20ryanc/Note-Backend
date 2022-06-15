@@ -2,22 +2,24 @@ package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 import java.lang.ClassCastException;
 
+@Entity
+@Table
 public class User {
-
-    private final UUID id;
-    @NotBlank
+    @Id
     private String email;
     @NotBlank
     private String name;
 
-    public User(@JsonProperty("id") UUID id,
-                @JsonProperty("email") String email,
+    public User(@JsonProperty("email") String email,
                 @JsonProperty("name") String name) {
-        this.id = id;
         this.email = email;
         this.name = name;
     }
@@ -28,10 +30,6 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     public String getEmail() {
@@ -50,8 +48,7 @@ public class User {
         }catch (ClassCastException e){
             return false;
         }
-        if(this.id == tmp.getId() &&
-                this.email.equals(tmp.getEmail()) &&
+        if(this.email.equals(tmp.getEmail()) &&
                 this.name.equals(tmp.getName())){
             return true;
         }
@@ -62,7 +59,6 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 '}';

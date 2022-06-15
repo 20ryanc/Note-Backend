@@ -19,27 +19,28 @@ public class MemDao {
         return UserList;
     }
 
-    public User getUser(UUID id){
+    public User getUser(String email){
         for(int i = 0; i < UserList.size(); i++){
-            if(UserList.get(i).getId().equals(id)){
+            if(UserList.get(i).getEmail().equals(email)){
                 return UserList.get(i);
             }
         }
+
         return null;
     }
 
     public void insertUser(User user){
         for(int i = 0; i < UserList.size(); i++){
-            if(UserList.get(i).getId().equals(user.getId())){
+            if(UserList.get(i).getEmail().equals(user.getEmail())){
                 return;
             }
         }
         UserList.add(user);
     }
 
-    public User removeUser(UUID id){
+    public User removeUser(String email){
         for(int i = 0; i < UserList.size(); i++){
-            if(UserList.get(i).getId().equals(id)){
+            if(UserList.get(i).getEmail().equals(email)){
                 return UserList.remove(i);
             }
         }
@@ -49,7 +50,7 @@ public class MemDao {
 
     public User updateUser(User user){
         for(int i = 0; i < UserList.size(); i++){
-            if(UserList.get(i).getId().equals(user.getId())){
+            if(UserList.get(i).getEmail().equals(user.getEmail())){
                 User tmp = UserList.remove(i);
                 UserList.add(user);
                 return tmp;

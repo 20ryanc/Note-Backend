@@ -23,16 +23,16 @@ public class UserService {
         return memdao.getAllUser();
     }
 
-    public User getUser(UUID id){
-        return memdao.getUser(id);
+    public User getUser(String email){
+        return memdao.getUser(email);
     }
 
     public void addUser(User user){
         memdao.insertUser(user);
     }
 
-    public User removeUser(UUID id){
-        return memdao.removeUser(id);
+    public User removeUser(String email){
+        return memdao.removeUser(email);
     }
 
     public User updateUser(User user){
