@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User getUser(String email){
-        return userRepository.getById(email);
+        return userRepository.findById(email).get();
     }
 
     public void addUser(User user){

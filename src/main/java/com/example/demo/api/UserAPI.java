@@ -22,8 +22,10 @@ public class UserAPI {
         return userService.getAllUser();
     }
 
-    @GetMapping("{Email}")
-    public User getUser(@PathVariable("Email") String email){
+
+    @GetMapping("/{email}")
+    public User getUser(@PathVariable("email") String email){
+        System.out.println(email);
         return userService.getUser(email);
     }
 
@@ -38,8 +40,8 @@ public class UserAPI {
         userService.updateUser(user);
     }
 
-    @DeleteMapping("/{Email}")
-    public void deleteUser(@PathVariable("Email") String email){
+    @DeleteMapping("/{email}")
+    public void deleteUser(@PathVariable("email") String email){
         System.out.println(email);
         userService.removeUser(email);
     }
