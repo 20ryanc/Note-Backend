@@ -2,7 +2,9 @@ package com.example.demo.service;
 
 import com.example.demo.dao.UserRepository;
 import com.example.demo.model.User;
+import org.hibernate.DuplicateMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,7 +33,11 @@ public class UserService implements UserDetailsService {
     }
 
     public void addUser(User user){
-        userRepository.save(user);
+        if(userRepository.findById(user.getUsername()).isEmpty()){
+            userRepository.save(user);
+        }else{
+            throw new DuplicateKeyException("User Already Exists");
+        }
     }
 
     public void removeUser(String email){

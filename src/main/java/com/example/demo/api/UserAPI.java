@@ -33,8 +33,8 @@ public class UserAPI {
 
 
     @GetMapping("/info")
-    public User getUser(@PathVariable("email") String email){
-        return userService.getUser(email).get();
+    public User getUser(Principal principal){
+        return userService.getUser(principal.getName()).get();
     }
 
     @PostMapping("/logout")
