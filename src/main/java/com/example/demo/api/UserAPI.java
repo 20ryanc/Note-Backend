@@ -1,9 +1,11 @@
 package com.example.demo.api;
+import com.example.demo.dao.EntryRepository;
+import com.example.demo.model.Entry;
+import com.example.demo.model.Entrytmp;
 import com.example.demo.model.User;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -33,8 +32,31 @@ public class UserAPI {
 
 
     @GetMapping("/info")
-    public User getUser(Principal principal){
-        return userService.getUser(principal.getName()).get();
+    public String getUser(Principal principal){
+        return principal.getName();
+    }
+
+    @PostMapping("/insertEntry")
+    public void insertEntry(Principal principal, @RequestBody List<Entrytmp> entryList){
+        for(int i = 0; i < entryList.size(); i++){
+            Entrytmp etmp = entryList.get(i);
+            Entry tmp = new Entry(principal.getName(), etmp.getTitle(), etmp.getContent(), i);
+            userService.insertEntry(tmp);
+        }
+    }
+
+    @GetMapping("/getEntry")
+    public List<Entrytmp> getEntry(Principal principal){
+        List<Entrytmp> ret = new ArrayList<Entrytmp>();
+        for(Entry tmp : userService.getAllEntry(principal.getName())){
+            ret.add(new Entrytmp(tmp.getTitle(),tmp.getContent()));
+        }
+        return ret;
+    }
+
+    @DeleteMapping("/deleteEntry")
+    public void deleteEntry(Principal principal){
+        userService.deleteAllEntry(principal.getName());
     }
 
     @PostMapping("/logout")
@@ -63,11 +85,6 @@ public class UserAPI {
     public void addUser(@RequestBody Map<String, String> body){
         User user = new User(body.get("email"),passwordEncoder.encode(body.get("password")));
         userService.addUser(user);
-    }
-
-    @PutMapping
-    public void updateUser(@RequestBody User user){
-        userService.updateUser(user);
     }
 
     @DeleteMapping("/{email}")

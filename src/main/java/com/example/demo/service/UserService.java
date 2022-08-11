@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.dao.EntryRepository;
 import com.example.demo.dao.UserRepository;
+import com.example.demo.model.Entry;
+import com.example.demo.model.Entrytmp;
 import com.example.demo.model.User;
-import org.hibernate.DuplicateMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,15 +19,12 @@ import java.util.Optional;
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
+    private EntryRepository entryRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, EntryRepository entryRepository) {
         this.userRepository = userRepository;
-    }
-
-
-    public List<User> getAllUser(){
-        return userRepository.findAll();
+        this.entryRepository = entryRepository;
     }
 
     public Optional<User> getUser(String email){
@@ -44,11 +43,17 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(email);
     }
 
-    public void updateUser(User user){
-        removeUser(user.getUsername());
-        addUser(user);
+    public List<Entry> getAllEntry(String email){
+        return entryRepository.findAllEntry(email);
     }
 
+    public void deleteAllEntry(String email){
+        entryRepository.deleteAllEntry(email);
+    }
+
+    public void insertEntry(Entry entry){
+        entryRepository.save(entry);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
