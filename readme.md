@@ -28,9 +28,7 @@ To login send a POST request to http://localhost:8080/api/v1/login. Send a json
     {
             "title": "...",
             "content": "..."
-    },
-    
-    etc.
+    }
 ]
 
 To delete all entries send a DELETE request to /api/v1/deleteEntry.
