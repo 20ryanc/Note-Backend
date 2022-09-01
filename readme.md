@@ -1,17 +1,17 @@
 Install relavent maven dependencies and run the service.
 
-Create a database in postgresql named "spring"
+Create a database in mysql named "spring"
 
 To register send a POST request to http://localhost:8080/api/v1/register. Send json
 {
-  "email": ...
-  "password": ...
+  "email": "...",
+  "password": "..."
 }
 
 To login send a POST request to http://localhost:8080/api/v1/login. Send a json 
 {
-  "email": ...
-  "password": ...
+  "email": "...",
+  "password": "..."
  }
  
  To logout send a POST request to http://localhost:8080/api/v1/logout.
